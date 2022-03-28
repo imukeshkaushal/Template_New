@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div>
+      <h3 id="wallet">
+        <!--SHOW CURRENT WALLET VALUE HERE, ONLY THE NUMBER SHOULD BE VISIBLE-->
+      </h3>
+    </div>
+
+    <div id="main">
+      <!--SHOW ALL THE VOUCEHRS DATA FROM API HERE( IMAGE, NAME AND PRICE)-->
+    </div>
+  </body>
+</html>
+
+<script type="module">
+  let main = document.querySelector("#main");
+  async function getData() {
+    let res = await fetch(
+      "https://masai-vouchers-api.herokuapp.com/api/vouchers"
+    );
+
+    let data = await res.json();
+    console.log(data[0].vouchers);
+
+    append(data[0].vouchers);
+
+    
+  }
+  getData();
+
+  function append(data) {
+    data.forEach(function (el, index) {
+      let div = document.createElement("div");
+      let name = document.createElement("p");
+      name.innerText = el.name;
+      let image = document.createElement("img");
+      image.src = el.image;
+      let price = document.createElement("p");
+      price.innerText = el.price;
+
+      div.append(image, name, price);
+      main.append(div);
+    });
+  }
+
+  // let h3 = document.querySelector("wallet");
+  // let getdata = JSON.parse(localStorage.getItem("wallet"));
+  // console.log(getdata);
+  // h3.textContent = h3.getdata;
+
+  // https://masai-vouchers-api.herokuapp.com/api/vouchers
+  //WRITE YOUR LOGIC HERE
+</script>
